@@ -1,0 +1,16 @@
+{
+  "presets": ["react-native"],
+  "plugins": [
+    [
+        "module-resolver", {
+            "cwd": "babelrc",
+            "alias": {
+                "components": "./src/components",
+                "views": "./src/views",
+                "assets": "./src/assets"
+            },
+            "extensions": [".js", ".android.js", ".ios.js"]
+        }
+    ]
+  ]
+}
