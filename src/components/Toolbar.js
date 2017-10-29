@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
   },
 });
 
-
 /**
  * The toolbar contains
  * a button to bring the side nav bar into context
@@ -19,21 +18,19 @@ const styles = StyleSheet.create({
 export default class Toolbar extends React.Component {
 
     openDrawer = () => {
-        this.props.hostContext.props.navigation.navigate('DrawerOpen')
+        this.props.navigation.navigate('DrawerToggle')
     }
 
     render() {
         return(
-            <View>
-                <Icon.ToolbarAndroid
-                    navIconName="bars"
-                    iconColor="white"
-                    title={this.props.host.navigationOptions.drawerLabel}
-                    titleColor="white"
-                    style={styles.toolbar}
-                    onIconClicked={this.openDrawer}
-                />
-            </View>
+            <Icon.ToolbarAndroid
+                navIconName="bars"
+                iconColor="white"
+                title={"Temp"}
+                titleColor="white"
+                style={styles.toolbar}
+                onIconClicked={this.openDrawer}
+            />
         );
     }
 }

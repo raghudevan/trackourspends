@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 import Toolbar from 'components/Toolbar';
-//import styles from 'assets/styles';
+import styles from 'assets/styles';
 
 export default class Home extends React.Component {
 
@@ -12,13 +12,9 @@ export default class Home extends React.Component {
 
     render() {
         return(
-            <View>
-                <Toolbar
-                    hostContext={this}
-                    host={Home}
-                />
+            <View style={styles.center}>
                 <Text>
-                    Wallets
+                    The Wallets page is WIP!
                 </Text>
             </View>
         );
