@@ -7,7 +7,11 @@
             "alias": {
                 "components": "./src/components",
                 "views": "./src/views",
-                "assets": "./src/assets"
+                "assets": "./src/assets",
+                "store": "./src/store",
+                "reducers": "./src/reducers",
+                "actions": "./src/actions",
+                "constants": "./src/constants"
             },
             "extensions": [".js", ".android.js", ".ios.js"]
         }

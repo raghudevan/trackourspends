@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { GoogleSignin } from 'react-native-google-signin';
 
 const styles = StyleSheet.create({
   toolbar: {
@@ -21,15 +22,22 @@ export default class Toolbar extends React.Component {
         this.props.navigation.navigate('DrawerToggle')
     }
 
+    onAction = (position) => {
+        GoogleSignin.signOut();
+        this.props.navigation.navigate('login');
+    }
+
     render() {
         return(
             <Icon.ToolbarAndroid
                 navIconName="bars"
                 iconColor="white"
-                title={"Temp"}
+                title={this.props.view.navigationOptions.drawerLabel}
                 titleColor="white"
                 style={styles.toolbar}
                 onIconClicked={this.openDrawer}
+                actions={[{title:"Logout", show: "always"}]}
+                onActionSelected={this.onAction}
             />
         );
     }

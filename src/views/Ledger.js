@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
+import styles from 'assets/styles';
+
 export default class Ledger extends React.Component {
 
     static navigationOptions = {
@@ -9,7 +11,7 @@ export default class Ledger extends React.Component {
 
     render() {
         return(
-            <View>
+            <View style={styles.center}>
                 <Text>
                     Welcome to the Ledger Screen!
                 </Text>

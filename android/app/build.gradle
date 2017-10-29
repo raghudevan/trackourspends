@@ -116,6 +116,14 @@ android {
                 keyPassword APP_RELEASE_KEY_PASSWORD
             }
         }
+        debug {
+            if (project.hasProperty('APP_RELEASE_STORE_FILE')) {
+                storeFile file(APP_RELEASE_STORE_FILE)
+                storePassword APP_RELEASE_STORE_PASSWORD
+                keyAlias APP_RELEASE_KEY_ALIAS
+                keyPassword APP_RELEASE_KEY_PASSWORD
+            }
+        }
     }
     splits {
         abi {

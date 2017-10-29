@@ -5,5 +5,10 @@ export default StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    appName: {
+        fontSize: 20,
+        padding: 20,
+        fontFamily: 'sans-serif-medium'
     }
 });

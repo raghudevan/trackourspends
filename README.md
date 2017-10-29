@@ -8,7 +8,8 @@
 
 ### Top Level View
 
-1. Must land on the ledger
+0. Must have google login
+1. Once logged in, must land on the ledger
 2. Must have a side nav bar to navigate between views
 
 ### Ledger
