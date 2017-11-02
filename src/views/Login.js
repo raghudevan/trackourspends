@@ -47,6 +47,7 @@ class Login extends React.Component {
         .then((user) => {
             this.props.actions.updateUser(user);
             this.props.navigation.navigate('ledger');
+            this.refs.signInBtn._clickListener.remove();
         }, (err) => {
             Alert.alert(
                 'Error',
@@ -55,9 +56,6 @@ class Login extends React.Component {
                     { text: 'OK' }
                  ]
             );
-        })
-        .then(() => {
-            this.refs.signInBtn._clickListener.remove()
         });
     }
 

@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
 export default class Toolbar extends React.Component {
 
     openDrawer = () => {
-        this.props.navigation.navigate('DrawerToggle')
+        this.props.navigation.navigate('DrawerToggle');
     }
 
     onAction = (position) => {
