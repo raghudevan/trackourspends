@@ -8,7 +8,6 @@ export default StyleSheet.create({
     },
     appName: {
         fontSize: 20,
-        padding: 20,
         fontFamily: 'sans-serif-medium'
     }
 });
