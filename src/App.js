@@ -20,7 +20,16 @@ const drawerRoutesConfig = [
     }
 ];
 
-const App = DrawerNavigator(createDrawerRoutes(drawerRoutesConfig));
+const App = DrawerNavigator(
+    createDrawerRoutes(drawerRoutesConfig),
+    {
+        contentOptions: {
+            labelStyle: {
+                width: '100%'
+            }
+        }
+    }
+);
 
 const Root = StackNavigator({
     login: {

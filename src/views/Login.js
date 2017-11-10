@@ -10,21 +10,34 @@ import styles from 'assets/styles';
 
 class Login extends React.Component {
 
-    componentDidMount() {
+    componentWillMount() {
         this._setupGoogleSignin();
     }
 
     async _setupGoogleSignin() {
-        await GoogleSignin.hasPlayServices({ autoResolve: true });
-        await GoogleSignin.configure({
-            scopes: ["https://www.googleapis.com/auth/drive.readonly"],
-            webClientId: '649923802570-h0jd096fdervvj9698doti5aeocr8bg0.apps.googleusercontent.com',
-            offlineAccess: false,
-            forceConsentPrompt: false
-        });
+        try {
+            await GoogleSignin.hasPlayServices({ autoResolve: true });
+            await GoogleSignin.configure({
+                scopes: ["https://www.googleapis.com/auth/drive.readonly"],
+                webClientId: '649923802570-s4v2vh63otqgk008ne8kl136ghodsu6v.apps.googleusercontent.com',
+                offlineAccess: false,
+                forceConsentPrompt: false
+            });
 
-        const user = await GoogleSignin.currentUserAsync();
-        this.props.actions.updateUser(user);
+            const user = await GoogleSignin.currentUserAsync();
+            if(user) {
+                this.props.actions.updateUser(user);
+                this.props.navigation.navigate('ledger');
+            }
+        } catch(exception) {
+            Alert.alert(
+                'Warning',
+                `Some exception: ${exception.message}`,
+                [
+                    { text: 'OK' }
+                ]
+            )
+        }
     }
 
     _signIn = () => {
@@ -55,9 +68,9 @@ class Login extends React.Component {
                 </Text>
                 <GoogleSigninButton
                     ref="signInBtn"
-                    style={{width: 312, height: 48}}
-                    size={GoogleSigninButton.Size.Wide}
-                    color={GoogleSigninButton.Color.Light}
+                    style={{width: 230, height: 48}}
+                    size={GoogleSigninButton.Size.Standard}
+                    color={GoogleSigninButton.Color.Dark}
                     onPress={this._signIn}
                 />
             </View>
