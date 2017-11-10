@@ -5,8 +5,8 @@
 	"scripts": {
 		"start": "node node_modules/react-native/local-cli/cli.js start",
 		"build-android": "cd android/ && ./gradlew assembleRelease && cd ../",
-		"preinstall": "yarn run uninstall",
-		"install": "adb install android/app/build/outputs/apk/app-release.apk",
+		"preinstall-release": "yarn run uninstall",
+		"install-release": "adb install android/app/build/outputs/apk/app-release.apk",
 		"preinstall-apk": "yarn run uninstall",
 		"install-apk": "adb install ~/Downloads/8.apk",
 		"uninstall": "adb uninstall com.trackourspends",
