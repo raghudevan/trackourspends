@@ -1,6 +1,6 @@
 {
 	"name": "TrackOurSpends",
-	"version": "11.17.6",
+	"version": "11.17.8",
 	"private": true,
 	"scripts": {
 		"start": "node node_modules/react-native/local-cli/cli.js start",
@@ -8,10 +8,11 @@
 		"preinstall-release": "yarn run uninstall",
 		"install-release": "adb install android/app/build/outputs/apk/app-release.apk",
 		"preinstall-apk": "yarn run uninstall",
-		"install-apk": "adb install ~/Downloads/6.apk",
+		"install-apk": "adb install ~/Downloads/8.apk",
 		"uninstall": "adb uninstall com.trackourspends",
 		"clean-gradle": "cd android/ && ./gradlew clean",
 		"postclean-gradle": "cd ~/repos/TrackOurSpends",
+		"dev-console": "adb shell input keyevent 82",
 		"test": "jest"
 	},
 	"dependencies": {

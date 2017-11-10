@@ -13,21 +13,29 @@
       },
       "oauth_client": [
         {
-          "client_id": "649923802570-66dristl2kva7oqsu8o5kh16k1vmll4j.apps.googleusercontent.com",
+          "client_id": "649923802570-km8fnlakmqruuku23uh198uupanq73th.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.trackourspends",
+            "certificate_hash": "e0d826a2aebe40ad1b88b7cb2c4a3d43f7eb28bd"
+          }
+        },
+        {
+          "client_id": "649923802570-s4v2vh63otqgk008ne8kl136ghodsu6v.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "649923802570-lrapeqi5o2kbd3ammcn9tea4dvovqs8n.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.trackourspends",
             "certificate_hash": "16b8cd743918e18f5a3524f4b911a8beacea066c"
           }
-        },
-        {
-          "client_id": "649923802570-h0jd096fdervvj9698doti5aeocr8bg0.apps.googleusercontent.com",
-          "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDr9c5OgFtRfNtJZWAnbZJKmdXsTcMdNFk"
+          "current_key": "AIzaSyD5DMxzlzim5VyoSKb3nKSYiZ7fz6ZxV0I"
         }
       ],
       "services": {
