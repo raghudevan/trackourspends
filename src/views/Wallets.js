@@ -25,7 +25,10 @@ export default class Home extends React.Component {
     }
 
     addWallet() {
-        alert('Saved lah!!')
+        let walletFormValue = this.refs.form.getValue();
+        if(walletFormValue !== null) {
+            alert(`Saved : ${JSON.stringify(walletFormValue)}`);
+        }
     }
 
     loadWallets() {
@@ -35,17 +38,18 @@ export default class Home extends React.Component {
     render() {
         return(
             <View style={styles.container}>
+                {/* display */}
                 <Form
-                    ref="walletForm"
+                    ref="form"
                     type={Wallet}
                     options={{}}
                 />
 
-                <TouchableHighlight style={styles.button} onPress={this.addWallet} underlayColor='#99d9f4'>
+                <TouchableHighlight style={styles.button} onPress={this.addWallet.bind(this)} underlayColor='#99d9f4'>
                     <Text style={styles.buttonText}>+ Add Wallet</Text>
                 </TouchableHighlight>
 
-                <TouchableHighlight style={styles.button} onPress={this.loadWallets} underlayColor='#99d9f4'>
+                <TouchableHighlight style={styles.button} onPress={this.loadWallets.bind(this)} underlayColor='#99d9f4'>
                     <Text style={styles.buttonText}>Load Wallets</Text>
                 </TouchableHighlight>
             </View>
