@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet,TextInput, Button } from 'react-native';
+import { View, Text, StyleSheet,TextInput, Button,TouchableHighlight } from 'react-native';
 var t = require('tcomb-form-native');
 
 import Toolbar from 'components/Toolbar';
@@ -28,6 +28,10 @@ export default class Home extends React.Component {
         alert('Saved lah!!')
     }
 
+    loadWallets() {
+        alert('First save lah!!')
+    }
+
     render() {
         return(
             <View style={styles.container}>
@@ -37,12 +41,13 @@ export default class Home extends React.Component {
                     options={{}}
                 />
 
-                <Button
-                    onPress={this.addWallet}
-                    title="+ Add Wallet"
-                    style={styles.button}
-                    accessibilityLabel="Click to Add Wallet"
-                />
+                <TouchableHighlight style={styles.button} onPress={this.addWallet} underlayColor='#99d9f4'>
+                    <Text style={styles.buttonText}>+ Add Wallet</Text>
+                </TouchableHighlight>
+
+                <TouchableHighlight style={styles.button} onPress={this.loadWallets} underlayColor='#99d9f4'>
+                    <Text style={styles.buttonText}>Load Wallets</Text>
+                </TouchableHighlight>
             </View>
         );
     }
