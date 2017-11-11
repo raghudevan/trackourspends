@@ -29,8 +29,16 @@ export default class Home extends React.Component {
         if(walletFormValue !== null) {
             try {
                 // Refactor this to actions
-                await AsyncStorage.setItem('trackOurSpends-wallets', walletFormValue.walletName);
-                alert('Saved wallet to disk: ' + walletFormValue.walletName);
+                let wallets = await AsyncStorage.getItem('trackOurSpends-wallets');
+
+                try {
+                    wallets = JSON.parse(wallets)
+                } catch(e) {}
+
+                let arrayToSave = Array.isArray(wallets)? wallets : [];
+                arrayToSave.push(walletFormValue.walletName);
+                await AsyncStorage.setItem('trackOurSpends-wallets', JSON.stringify(arrayToSave));
+                alert('Saved new wallet to disk: ' + walletFormValue.walletName);
             } catch (error) {
                 alert('AsyncStorage error: ' + error.message);
             }
