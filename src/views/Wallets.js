@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet,TextInput, Button,TouchableHighlight } from 'react-native';
+import { View, Text, StyleSheet, AsyncStorage, TouchableHighlight } from 'react-native';
 var t = require('tcomb-form-native');
 
 import Toolbar from 'components/Toolbar';
@@ -24,15 +24,29 @@ export default class Home extends React.Component {
         };
     }
 
-    addWallet() {
+    async addWallet() {
         let walletFormValue = this.refs.form.getValue();
         if(walletFormValue !== null) {
-            alert(`Saved : ${JSON.stringify(walletFormValue)}`);
+            try {
+              await AsyncStorage.setItem('trackOurSpends-wallets', walletFormValue.walletName);
+              alert('Saved wallet to disk: ' + walletFormValue.walletName);
+            } catch (error) {
+              alert('AsyncStorage error: ' + error.message);
+            }
         }
     }
 
-    loadWallets() {
-        alert('First save lah!!')
+    async loadWallets() {
+        try {
+            let value = await AsyncStorage.getItem('trackOurSpends-wallets');
+            if (value !== null){
+                alert('Recovered wallet from disk: ' + value);
+            } else {
+                alert('No Wallets saved');
+            }
+        } catch (error) {
+            alert('AsyncStorage error: ' + error.message);
+        }
     }
 
     render() {
