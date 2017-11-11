@@ -28,16 +28,18 @@ export default class Home extends React.Component {
         let walletFormValue = this.refs.form.getValue();
         if(walletFormValue !== null) {
             try {
-              await AsyncStorage.setItem('trackOurSpends-wallets', walletFormValue.walletName);
-              alert('Saved wallet to disk: ' + walletFormValue.walletName);
+                // Refactor this to actions
+                await AsyncStorage.setItem('trackOurSpends-wallets', walletFormValue.walletName);
+                alert('Saved wallet to disk: ' + walletFormValue.walletName);
             } catch (error) {
-              alert('AsyncStorage error: ' + error.message);
+                alert('AsyncStorage error: ' + error.message);
             }
         }
     }
 
     async loadWallets() {
         try {
+            // Refactor this to reducer
             let value = await AsyncStorage.getItem('trackOurSpends-wallets');
             if (value !== null){
                 alert('Recovered wallet from disk: ' + value);
