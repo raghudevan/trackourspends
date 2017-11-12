@@ -1,14 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet, AsyncStorage, TouchableHighlight } from 'react-native';
-var t = require('tcomb-form-native');
+import tcomb from 'tcomb-form-native';
 
 import Toolbar from 'components/Toolbar';
 import styles from 'assets/styles';
 
-let Form = t.form.Form;
-
-let Wallet = t.struct({
-  walletName: t.String,              // a required string
+let Form = tcomb.form.Form;
+let Wallet = tcomb.struct({
+  walletName: tcomb.String,              // a required string
 });
 
 export default class Home extends React.Component {

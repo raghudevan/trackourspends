@@ -1,6 +1,12 @@
 {
-  "presets": ["react-native"],
+  "presets": ["react-native", "env"],
   "plugins": [
+    [
+        "transform-object-rest-spread", {
+            "useBuiltIns": true
+        }
+    ],
+    "transform-class-properties",
     [
         "module-resolver", {
             "cwd": "babelrc",

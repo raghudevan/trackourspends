@@ -6,6 +6,7 @@ import { Alert, View, Text } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 
 import * as loginActions from 'actions/login';
+import * as asyncStorageActions from 'actions/async-storage';
 import styles from 'assets/styles';
 
 class Login extends React.Component {
@@ -26,8 +27,7 @@ class Login extends React.Component {
 
             const user = await GoogleSignin.currentUserAsync();
             if(user) {
-                this.props.actions.updateUser(user);
-                this.props.navigation.navigate('ledger');
+                this._postLogin();
             }
         } catch(exception) {
             Alert.alert(
@@ -40,11 +40,16 @@ class Login extends React.Component {
         }
     }
 
+    _postLogin = (user) => {
+        this.props.actions.updateUser(user);
+        // this.props.actions.read(user.id);
+        this.props.navigation.navigate('ledger');
+    }
+
     _signIn = () => {
         GoogleSignin.signIn()
         .then((user) => {
-            this.props.actions.updateUser(user);
-            this.props.navigation.navigate('ledger');
+            this._postLogin();
             this.refs.signInBtn._clickListener.remove();
         }, (err) => {
             Alert.alert(
@@ -86,7 +91,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(loginActions, dispatch)
+        actions: bindActionCreators({ ...loginActions, ...asyncStorageActions }, dispatch)
     };
 }
 

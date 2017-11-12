@@ -1,5 +1,5 @@
-import login from './login';
+import app from './app';
 
 export {
-    login,
+    app,
 }
