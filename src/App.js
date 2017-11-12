@@ -31,6 +31,8 @@ const App = DrawerNavigator(
     }
 );
 
+// App is a DrawerNavigator that contains StackNavs
+// at each route
 const Root = StackNavigator({
     login: {
         screen: Login,
