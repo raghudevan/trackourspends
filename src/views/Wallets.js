@@ -33,7 +33,9 @@ export default class Home extends React.Component {
 
                 try {
                     wallets = JSON.parse(wallets)
-                } catch(e) {}
+                } catch(e) {
+
+                }
 
                 let arrayToSave = Array.isArray(wallets)? wallets : [];
                 arrayToSave.push(walletFormValue.walletName);
