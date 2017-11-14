@@ -11,7 +11,7 @@ import styles from 'assets/styles';
 
 class Login extends React.Component {
 
-    componentWillMount() {
+    componentDidMount() {
         this._setupGoogleSignin();
     }
 
@@ -27,9 +27,10 @@ class Login extends React.Component {
 
             const user = await GoogleSignin.currentUserAsync();
             if(user) {
-                this._postLogin();
+                this._postLogin(user);
             }
         } catch(exception) {
+            debugger;
             Alert.alert(
                 'Warning',
                 `Some exception: ${exception.message}`,
@@ -49,7 +50,7 @@ class Login extends React.Component {
     _signIn = () => {
         GoogleSignin.signIn()
         .then((user) => {
-            this._postLogin();
+            this._postLogin(user);
             this.refs.signInBtn._clickListener.remove();
         }, (err) => {
             Alert.alert(

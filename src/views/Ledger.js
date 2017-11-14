@@ -9,10 +9,6 @@ export default class Ledger extends React.Component {
         drawerLabel: "Ledger"
     }
 
-    componentDidMount() {
-        // dump data from AsyncStorage into redux state
-    }
-
     render() {
         return(
             <View style={styles.center}>

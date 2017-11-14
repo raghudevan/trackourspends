@@ -30,6 +30,7 @@ export default class Toolbar extends React.Component {
             case 0: {
                 GoogleSignin.signOut();
                 this.props.navigation.navigate('login');
+                // need to set the user to null?
                 break;
             }
         }
