@@ -1,24 +1,27 @@
 import { AsyncStorage } from 'react-native';
 
-export function async read(userid) {
-    let data;
+export async function read(userObj) {
+    let appState;
     try {
-        data = await AsyncStorage.getItem(userid).then(data => JSON.parse(data));
-        data = data || { ledger: [], wallets: [] };
+        appState = await AsyncStorage.getItem(userObj.email);
+        if (appState) {
+            appState = JSON.parse(appState);
+        }
     } catch (exception) {
-        // log the exception?
+        console.log('unable to read from async storage');
     }
-    return data;
+
+    return appState || { ledger: [], wallets: [] };
 }
 
-export function async write(userid, data) {
-    let isWriteSuccess = false;
-    try {
-        await AsyncStorage.setItem(userid, JSON.stringify(data));
-        isWriteSuccess = true;
-    } catch (exception) {
-        // log the exception?
-    }
-    return isWriteSuccess;
-}
+//export function write(userObj, data) {
+//    let isWriteSuccess = false;
+//    try {
+//        await AsyncStorage.setItem(userObj.email, JSON.stringify(data));
+//        isWriteSuccess = true;
+//    } catch (exception) {
+//        // log the exception?
+//    }
+//    return isWriteSuccess;
+//}
 

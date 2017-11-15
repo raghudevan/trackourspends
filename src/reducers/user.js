@@ -9,7 +9,7 @@ export default function (state = initialState, action) {
         case user.LOAD_SUCCESS: {
             return { ...state, user: action.user };
         }
-        case login.FAILED: {
+        case user.FAILED: {
             return state;
         }
         default: {

@@ -40,15 +40,16 @@ class Login extends React.Component {
     }
 
     _postLogin = (user) => {
-        this.props.actions.loadUserData(user)
-        .then(() => this.props.navigation.navigate('ledger'));
+        this.props.actions.loadUserData(user).then(() => {
+            this.props.navigation.navigate('ledger');
+            this.refs.signInBtn._clickListener.remove();
+        });
     }
 
     _signIn = () => {
         GoogleSignin.signIn()
         .then((user) => {
             this._postLogin(user);
-            this.refs.signInBtn._clickListener.remove();
         }, (err) => {
             Alert.alert(
                 'Error',

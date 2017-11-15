@@ -1,21 +1,16 @@
 import * as user from '@constants/user';
 
-import { read, write } from '@utils/async-actions';
+import { read, write } from '@utils/async-storage';
 
-export function loadUserData(user) {
+export function loadUserData(userObj, callback) {
     return (dispatch) => {
-        return read(user).then(appState => {
+        let dataPromise = read(userObj);
+        return dataPromise.then((appState) => {
             return dispatch({
                 type: user.LOAD_SUCCESS,
-                user,
-                appState
+                user: userObj,
+                appState,
             });
         });
     };
 }
-
-//export function saveUserData(data) {
-//    return async (dispatch) => {
-//
-//    }
-//}
