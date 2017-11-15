@@ -21,6 +21,12 @@ function createStack({ stackName, view }) {
     });
 }
 
+export function makeStatefulApp() {
+    return class StatefulApp extends React.Component {
+
+    }
+}
+
 export default function createDrawerRoutes(config) {
     return config.reduce((routesConfig, stackObj) => {
          routesConfig[stackObj.stackName] =  { screen: createStack(stackObj) }

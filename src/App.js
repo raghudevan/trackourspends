@@ -69,6 +69,31 @@ const mapStateToProps = (state) => ({ nav: state.nav });
 const ConnectedRootWithNavigationState = connect(mapStateToProps)(RootWithNavigationState);
 
 class StatefulApp extends React.Component {
+
+    constructor() {
+        super();
+        this.timeout = null;
+    }
+
+    componentDidMount() {
+        BackHandler.addEventListener('backBtnPressed', this._onBackBtnPress)
+    }
+
+    componentWillUnmount() {
+        BackHandler.removeEventListener('backBtnPressed', this._onBackBtnPress)
+    }
+
+    _onBackBtnPress = () => {
+        if (this.timeout) {
+            this.timeout = null;
+            BackHandler.exitApp();
+        } else {
+            ToastAndroid.show('Press back again to exit', ToastAndroid.SHORT);
+            this.timeout = setTimeout(() => this.timeout = null, 1000);
+            return true;
+        }
+    }
+
     render() {
         return (
             <Provider store={store}>
