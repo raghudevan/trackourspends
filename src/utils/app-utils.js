@@ -1,7 +1,7 @@
 import React from 'react';
 import { StackNavigator } from 'react-navigation';
 
-import Toolbar from 'components/Toolbar';
+import Toolbar from '@components/Toolbar';
 
 function createStack({ stackName, view }) {
     return StackNavigator({
@@ -19,12 +19,6 @@ function createStack({ stackName, view }) {
             }
         }
     });
-}
-
-export function makeStatefulApp() {
-    return class StatefulApp extends React.Component {
-
-    }
 }
 
 export default function createDrawerRoutes(config) {

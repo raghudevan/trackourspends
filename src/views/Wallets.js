@@ -2,8 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, AsyncStorage, TouchableHighlight } from 'react-native';
 import tcomb from 'tcomb-form-native';
 
-import Toolbar from 'components/Toolbar';
-import styles from 'assets/styles';
+import styles from '@assets/styles';
 
 let Form = tcomb.form.Form;
 let Wallet = tcomb.struct({

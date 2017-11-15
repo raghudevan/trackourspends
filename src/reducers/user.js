@@ -1,5 +1,4 @@
-import * as login from 'constants/login';
-import * as asyncStorage from 'constants/async-storage';
+import * as user from '@constants/user';
 
 const initialState = {
     user: null,
@@ -7,14 +6,11 @@ const initialState = {
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        case login.SUCCESS: {
+        case user.LOAD_SUCCESS: {
             return { ...state, user: action.user };
         }
         case login.FAILED: {
             return state;
-        }
-        case asyncStorage.READ_SUCCESS: {
-            return { ...state, appState: action.data };
         }
         default: {
             return state;

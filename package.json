@@ -3,7 +3,7 @@
 	"version": "11.17.8",
 	"private": true,
 	"scripts": {
-		"prestart": "open 'rndebugger://set-debugger-loc?host=localhost&port=8081'",
+		"prestart": "yarn run open-debugger",
 		"start": "react-native run-android",
 		"build-android": "cd android/ && ./gradlew assembleRelease && cd ../",
 		"preinstall-release": "yarn run uninstall",
@@ -14,6 +14,7 @@
 		"clean-gradle": "cd android/ && ./gradlew clean",
 		"postclean-gradle": "cd ~/repos/TrackOurSpends",
 		"dev-console": "adb shell input keyevent 82",
+		"open-debugger": "open 'rndebugger://set-debugger-loc?host=localhost&port=8081'",
 		"test": "jest"
 	},
 	"dependencies": {

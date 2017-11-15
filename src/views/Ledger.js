@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-import styles from 'assets/styles';
+import styles from '@assets/styles';
 
 export default class Ledger extends React.Component {
 

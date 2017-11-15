@@ -3,12 +3,12 @@ import { BackHandler, ToastAndroid } from 'react-native';
 import { StackNavigator, DrawerNavigator, addNavigationHelpers } from 'react-navigation';
 import { connect, Provider } from 'react-redux';
 
-import createDrawerRoutes from './app-utils';
-import createStore from 'store';
+import createDrawerRoutes from '@utils/app-utils';
+import createStore from '@store';
 
-import Login from 'views/Login';
-import Ledger from 'views/Ledger';
-import Wallets from 'views/Wallets';
+import Login from '@views/Login';
+import Ledger from '@views/Ledger';
+import Wallets from '@views/Wallets';
 
 const drawerRoutesConfig = [
     {

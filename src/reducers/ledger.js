@@ -1,4 +1,4 @@
-import * as ledger from 'constants/ledger';
+import * as ledger from '@constants/ledger';
 
 const initialState = {
     transactions: []

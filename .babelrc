@@ -11,13 +11,14 @@
         "module-resolver", {
             "cwd": "babelrc",
             "alias": {
-                "components": "./src/components",
-                "views": "./src/views",
-                "assets": "./src/assets",
-                "store": "./src/store",
-                "reducers": "./src/reducers",
-                "actions": "./src/actions",
-                "constants": "./src/constants"
+                "@utils": "./src/utils",
+                "@components": "./src/components",
+                "@views": "./src/views",
+                "@assets": "./src/assets",
+                "@store": "./src/store",
+                "@reducers": "./src/reducers",
+                "@actions": "./src/actions",
+                "@constants": "./src/constants"
             },
             "extensions": [".js", ".android.js", ".ios.js"]
         }

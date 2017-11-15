@@ -5,9 +5,8 @@ import { bindActionCreators } from 'redux';
 import { Alert, View, Text } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 
-import * as loginActions from 'actions/login';
-import * as asyncStorageActions from 'actions/async-storage';
-import styles from 'assets/styles';
+import * as userActions from '@actions/user';
+import styles from '@assets/styles';
 
 class Login extends React.Component {
 
@@ -41,9 +40,8 @@ class Login extends React.Component {
     }
 
     _postLogin = (user) => {
-        // this.props.actions.updateUser(user);
-        // this.props.actions.read(user.id);
-        this.props.navigation.navigate('ledger');
+        this.props.actions.loadUserData(user)
+        .then(() => this.props.navigation.navigate('ledger'));
     }
 
     _signIn = () => {
@@ -91,8 +89,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({ ...loginActions, ...asyncStorageActions }, dispatch)
+        actions: bindActionCreators(userActions, dispatch)
     };
 }
 
-export default Login; //connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
