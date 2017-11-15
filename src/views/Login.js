@@ -30,7 +30,6 @@ class Login extends React.Component {
                 this._postLogin(user);
             }
         } catch(exception) {
-            debugger;
             Alert.alert(
                 'Warning',
                 `Some exception: ${exception.message}`,
@@ -42,7 +41,7 @@ class Login extends React.Component {
     }
 
     _postLogin = (user) => {
-        this.props.actions.updateUser(user);
+        // this.props.actions.updateUser(user);
         // this.props.actions.read(user.id);
         this.props.navigation.navigate('ledger');
     }
@@ -96,4 +95,4 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default Login; //connect(mapStateToProps, mapDispatchToProps)(Login);

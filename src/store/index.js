@@ -5,14 +5,12 @@ import thunk from 'redux-thunk';
 
 import * as reducers from 'reducers';
 
-const initialState = {};
 const createStoreWithMiddlewares = applyMiddleware(thunk)(createStore);
-const reducer = combineReducers(reducers);
+const makeAppReducer = (dynamicReducers) => combineReducers({ ...reducers, ...dynamicReducers });
 
-const createMyStore = () =>
+const createMyStore = (dynamicReducers = {}) =>
     createStore(
-        reducer,
-        initialState,
+        makeAppReducer(dynamicReducers),
         composeWithDevTools(
             applyMiddleware(thunk)
         )

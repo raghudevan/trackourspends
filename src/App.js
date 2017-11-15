@@ -1,7 +1,7 @@
 import React from 'react';
 import { BackHandler, ToastAndroid } from 'react-native';
-import { StackNavigator, DrawerNavigator } from 'react-navigation';
-import { Provider } from 'react-redux';
+import { StackNavigator, DrawerNavigator, addNavigationHelpers } from 'react-navigation';
+import { connect, Provider } from 'react-redux';
 
 import createDrawerRoutes from './app-utils';
 import createStore from 'store';
@@ -14,10 +14,6 @@ const drawerRoutesConfig = [
     {
         stackName: 'ledger',
         view: Ledger
-    },
-    {
-        stackName: 'wallets',
-        view: Wallets
     }
 ];
 
@@ -45,38 +41,38 @@ const Root = StackNavigator({
     headerMode: 'none'
 });
 
-const store = createStore();
+const initialState = Root.router.getStateForAction(Root.router.getActionForPathAndParams('login'));
+const navReducer = (state = initialState, action) => {
+    const nextState = Root.router.getStateForAction(action, state);
+    return nextState || state;
+}
 
-class StatefulApp extends React.Component {
+const store = createStore({ nav: navReducer });
 
-    constructor() {
-        super();
-        this.timeout = null;
-    }
-
-    componentDidMount() {
-        BackHandler.addEventListener('onBackPress', this._handleBackBtnPress);
-    }
-
-    componentWillUnmount() {
-        BackHandler.removeEventListener('onBackPress', this._handleBackBtnPress);
-    }
-
-    _handleBackBtnPress = () => {
-        if (this.timeout) {
-            this.timeout = null;
-            BackHandler.exitApp();
-        } else {
-            ToastAndroid.show('Press back again to exit', ToastAndroid.SHORT);
-            this.timeout = setTimeout(() => this.timeout = null, 1000);
-            return true;
-        }
+class RootWithNavigationState extends React.Component {
+    makeNavigation = () => {
+        return addNavigationHelpers({
+            dispatch: this.props.dispatch,
+            state: this.props.nav
+        });
     }
 
     render() {
-        return(
+        return (
+            <Root navigation={this.makeNavigation()} />
+        );
+    }
+}
+
+const mapStateToProps = (state) => ({ nav: state.nav });
+
+const ConnectedRootWithNavigationState = connect(mapStateToProps)(RootWithNavigationState);
+
+class StatefulApp extends React.Component {
+    render() {
+        return (
             <Provider store={store}>
-                <Root/>
+                <ConnectedRootWithNavigationState />
             </Provider>
         );
     }
