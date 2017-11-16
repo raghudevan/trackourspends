@@ -14,6 +14,10 @@ const drawerRoutesConfig = [
     {
         stackName: 'ledger',
         view: Ledger
+    },
+    {
+        stackName: 'wallets',
+        view: Wallets
     }
 ];
 

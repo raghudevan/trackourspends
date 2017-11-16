@@ -32,9 +32,10 @@ class Toolbar extends React.Component {
     onAction = async (position) => {
         switch(position) {
             case 0: {
-                await GoogleSignin.signOut();
-                await this.props.actions.postLogout();
-                this.props.navigation.navigate('login');
+                await GoogleSignin.signOut(this.props.user);
+                await this.props.actions.saveUserData(this.props.user).then(() => {
+                    this.props.navigation.navigate('login');
+                });
                 break;
             }
         }
@@ -61,7 +62,7 @@ class Toolbar extends React.Component {
 
 function mapStateToProps(state) {
     return {
-
+        user: state.user
     };
 }
 
@@ -71,4 +72,4 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default connect(null, mapDispatchToProps)(Toolbar);
+export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);

@@ -1,16 +1,14 @@
 import * as user from '@constants/user';
 
-const initialState = {
-    user: null,
-};
+const initialState = null
 
 export default function (state = initialState, action) {
     switch (action.type) {
         case user.LOAD_SUCCESS: {
-            return { ...state, user: action.user };
+            return action.user;
         }
-        case user.FAILED: {
-            return state;
+        case user.UNLOAD_SUCCESS: {
+            return action.user;
         }
         default: {
             return state;
