@@ -1,9 +1,10 @@
 import React from 'react';
-import { BackHandler, ToastAndroid } from 'react-native';
+import { AppState, BackHandler, ToastAndroid } from 'react-native';
 import { StackNavigator, DrawerNavigator, addNavigationHelpers } from 'react-navigation';
 import { connect, Provider } from 'react-redux';
 
 import createDrawerRoutes from '@utils/app-utils';
+import { write } from '@utils/async-storage';
 import createStore from '@store';
 
 import Login from '@views/Login';
@@ -81,10 +82,12 @@ class StatefulApp extends React.Component {
 
     componentDidMount() {
         BackHandler.addEventListener('backBtnPressed', this._onBackBtnPress)
+        AppState.addEventListener('change', this._handleAppStateChange);
     }
 
     componentWillUnmount() {
         BackHandler.removeEventListener('backBtnPressed', this._onBackBtnPress)
+        AppState.removeEventListener('change', this._handleAppStateChange);
     }
 
     _onBackBtnPress = () => {
@@ -95,6 +98,18 @@ class StatefulApp extends React.Component {
             ToastAndroid.show('Press back again to exit', ToastAndroid.SHORT);
             this.timeout = setTimeout(() => this.timeout = null, 1000);
             return true;
+        }
+    }
+
+    _handleAppStateChange = (nextAppState) => {
+        if (nextAppState.match(/inactive|background/)) {
+            console.log(`going ${nextAppState}`)
+            const { user, nav, ...appState } = store.getState();
+            if (user) {
+                write(user, appState)/*.then((isWriteSuccess) => {
+                    console.log('isWriteSuccess', isWriteSuccess)
+                });*/
+            }
         }
     }
 

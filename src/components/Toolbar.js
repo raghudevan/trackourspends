@@ -32,10 +32,13 @@ class Toolbar extends React.Component {
     onAction = async (position) => {
         switch(position) {
             case 0: {
-                await GoogleSignin.signOut(this.props.user);
-                await this.props.actions.saveUserData(this.props.user).then(() => {
+                try {
+                    await GoogleSignin.signOut(this.props.user);
+                    await this.props.actions.saveUserData(this.props.user, this.props.appState)
                     this.props.navigation.navigate('login');
-                });
+                } catch (exception) {
+                    console.log('unable to save user data at the moment');
+                }
                 break;
             }
         }
@@ -61,8 +64,10 @@ class Toolbar extends React.Component {
 }
 
 function mapStateToProps(state) {
+    let { user, nav, ...appState } = state;
     return {
-        user: state.user
+        user,
+        appState,
     };
 }
 
