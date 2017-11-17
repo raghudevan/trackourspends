@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { GoogleSignin } from 'react-native-google-signin';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -26,7 +26,11 @@ const styles = StyleSheet.create({
 class Toolbar extends React.Component {
 
     openDrawer = () => {
-        this.props.navigation.navigate('DrawerToggle');
+        if (this.props.view.navigationOptions.hiddenView) {
+            this.props.navigation.goBack();
+        } else {
+            this.props.navigation.navigate('DrawerToggle');
+        }
     }
 
     onAction = async (position) => {
@@ -44,19 +48,35 @@ class Toolbar extends React.Component {
         }
     }
 
+    _isHiddenView = () => {
+        return this.props.view.navigationOptions.hiddenView;
+    }
+
+    _makeActions = () => {
+        let actions;
+        if (this._isHiddenView()) {
+            actions = [];
+        } else {
+            actions = [
+                { title:"Logout", show: "always", icon: powerIcon, show: "never" },
+                { title:"Sync", show: "always", icon: syncIcon }
+            ];
+        }
+        return actions;
+    }
+
     render() {
+        // icon name cheat sheet
+        // https://github.com/oblador/react-native-vector-icons/blob/master/glyphmaps/Ionicons.json
         return(
             <Icon.ToolbarAndroid
-                navIconName="bars"
+                navIconName={this._isHiddenView() ? 'md-arrow-back' : 'md-menu'}
                 iconColor="white"
                 title={this.props.view.navigationOptions.drawerLabel}
                 titleColor="white"
                 style={styles.toolbar}
                 onIconClicked={this.openDrawer}
-                actions={[
-                    { title:"Logout", show: "always", icon: powerIcon, show: "never" },
-                    { title:"Sync", show: "always", icon: syncIcon }
-                ]}
+                actions={this._makeActions()}
                 onActionSelected={this.onAction}
             />
         );

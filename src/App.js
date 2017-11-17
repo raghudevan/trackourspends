@@ -9,12 +9,19 @@ import createStore from '@store';
 
 import Login from '@views/Login';
 import Ledger from '@views/Ledger';
+import CreateTransaction from '@views/CreateTransaction';
 import Wallets from '@views/Wallets';
 
 const drawerRoutesConfig = [
     {
         stackName: 'ledger',
-        view: Ledger
+        view: Ledger,
+        children: [
+            {
+                name: 'create-transaction',
+                view: CreateTransaction
+            }
+        ]
     },
     {
         stackName: 'wallets',

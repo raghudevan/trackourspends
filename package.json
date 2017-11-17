@@ -25,6 +25,7 @@
 		"material-design-icons": "^3.0.1",
 		"react": "16.1.1",
 		"react-native": "0.50.3",
+		"react-native-action-button": "^2.8.2",
 		"react-native-device-info": "^0.12.1",
 		"react-native-google-signin": "^0.12.0",
 		"react-native-vector-icons": "^4.4.2",

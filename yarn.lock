@@ -3450,6 +3450,12 @@ react-devtools-core@^2.5.0:
     shell-quote "^1.6.1"
     ws "^2.0.3"
 
+react-native-action-button@^2.8.2:
+  version "2.8.2"
+  resolved "https://registry.yarnpkg.com/react-native-action-button/-/react-native-action-button-2.8.2.tgz#12a10b66de0904a2849c76cd26d660491a329e13"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-device-info@^0.12.1:
   version "0.12.1"
   resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.12.1.tgz#659ed145caa5a86a4815904381b25e9ebe0c24f6"
