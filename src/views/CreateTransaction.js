@@ -14,7 +14,7 @@ export default class CreateTransaction extends React.Component {
         return (
             <View style={styles.center}>
                 <Text>
-                    create transaction view
+                    Create transaction view
                 </Text>
             </View>
         );
