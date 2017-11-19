@@ -6,6 +6,10 @@ export default StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    fullHeightWidth: {
+        height: "100%",
+        width: "100%",
+    },
     appName: {
         fontSize: 20,
         fontFamily: 'sans-serif-medium'

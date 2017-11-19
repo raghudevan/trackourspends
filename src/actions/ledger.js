@@ -1,8 +1,9 @@
-import * as ledger from 'constants/ledger';
+import * as ledger from '@constants/ledger';
 
-export function createTransaction() {
+export function createTransaction(transaction) {
     return {
         type: ledger.CREATE,
+        transaction
     };
 }
 

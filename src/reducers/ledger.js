@@ -90,7 +90,7 @@ const initialState = {
 export default function(state = initialState, action) {
     switch (action.type) {
         case ledger.CREATE: {
-            let transactions = state.transactions.concat([action.data]);
+            let transactions = state.transactions.concat([action.transaction]);
             return { transactions };
         }
         case ledger.UPDATE: {

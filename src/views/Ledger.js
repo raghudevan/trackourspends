@@ -112,7 +112,6 @@ class Ledger extends React.Component {
     }
 
     render() {
-        debugger
         return(
             <View style={styles.center}>
                 <SectionList
