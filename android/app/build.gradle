@@ -101,8 +101,8 @@ android {
         applicationId "com.trackourspends"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 10
-        versionName "11.17.10"
+        versionCode 11
+        versionName "11.17.11"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -150,7 +150,8 @@ android {
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
-                        defaultConfig.versionCode + versionCodes.get(abi) - 1
+                        (versionCodes.get(abi) + 2) * 1000000 +
+                        defaultConfig.versionCode
             }
         }
     }

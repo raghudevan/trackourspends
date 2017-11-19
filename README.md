@@ -1,35 +1,13 @@
 # TrackOurSpends
 
-### Views
+A simple expense tracking application with cloud sync across multiple devices. This application will always be free and without ads. 
 
-1. Ledger
-2. Wallets
-3. Notes
+### Things i dont like
+* ads in apps
+* most expense tracking apps do not have cloud sync across devices
+* i cant add features onto other people's apps
 
-### Top Level View
-
-0. Must have google login
-1. Once logged in, must land on the ledger
-2. Must have a side nav bar to navigate between views
-
-### Ledger
-
-**Purpose**: To store transactions, must be able to quickly switch between
-days by swipping left, right
-
-**Functionality**: 
-* Ledger must take currency symbol 
-* Must be able to CRUD transactions
-* All transactions must appear in chronological order
-* @transaction: amount, type(expense/income), category, wallet, date, notes
-* When a transaction is added/updated/removed, the corresponding wallet is updated
-
-### Wallets
-
-**Purpose**: To keep track of various sources of money
-
-**Functionality**: 
-* Must be able to CRUD wallets
-* A wallet can hold a certain amount of money
-* Can initiate transfers between wallets here (should appear in ledger)
-* @wallet_transfer: from, to (wallets), date, notes
+### As a result...
+* this app will always be free to use
+* could sync will be an available feature
+* i can add w/e features i want!

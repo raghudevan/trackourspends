@@ -5,6 +5,7 @@
 	"scripts": {
 		"prestart": "yarn run open-debugger",
 		"start": "react-native run-android",
+		"prebuild-android": "rm -rf android/app/build/outputs/*",
 		"build-android": "cd android/ && ./gradlew assembleRelease && cd ../",
 		"preinstall-release": "yarn run uninstall",
 		"install-release": "adb install android/app/build/outputs/apk/app-release.apk",
