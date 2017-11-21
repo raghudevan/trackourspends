@@ -19,7 +19,7 @@ class Login extends React.Component {
             await GoogleSignin.hasPlayServices({ autoResolve: true });
             await GoogleSignin.configure({
                 scopes: ["https://www.googleapis.com/auth/drive.readonly"],
-                webClientId: '649923802570-s4v2vh63otqgk008ne8kl136ghodsu6v.apps.googleusercontent.com',
+                webClientId: '649923802570-km8fnlakmqruuku23uh198uupanq73th.apps.googleusercontent.com',
                 offlineAccess: false,
                 forceConsentPrompt: false
             });
