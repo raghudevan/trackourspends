@@ -12,9 +12,10 @@ const UNDERLINE_COLOR = '#64B5F6';
 const style = StyleSheet.create({
     container: {
         backgroundColor: '#fff',
-        flex: 1,
         paddingTop: 20,
-        height: '100%',
+    },
+    fullHeight: {
+        flex: 1,
     },
     base: {
         width: '100%',
@@ -23,8 +24,7 @@ const style = StyleSheet.create({
         marginTop: 20,
         paddingLeft: 0,
     },
-    input: {
-    }
+    inputField: {}
 });
 
 class TransactionForm extends React.Component {
@@ -32,6 +32,7 @@ class TransactionForm extends React.Component {
     constructor() {
         super();
         this.state = {
+            containerStyle: mergeStyles('container', 'fullHeight'),
             amount: '',
             category: '',
             date: 'Today',
@@ -40,11 +41,27 @@ class TransactionForm extends React.Component {
     }
 
     componentDidMount() {
-        this.hideKeyboardListener = Keyboard.addListener('keyboardDidHide', this._validateAmt);
+        this.showKeyboardListener = Keyboard.addListener('keyboardDidShow', this._onKeyboardOpen);
+        this.hideKeyboardListener = Keyboard.addListener('keyboardDidHide', this._onKeyboardClose);
     }
 
     componentWillUnmount() {
         this.hideKeyboardListener.remove();
+    }
+
+    _onKeyboardClose = () => {
+        this._validateAmt();
+        this._setViewHeightToFull(true);
+    }
+
+    _onKeyboardOpen = () => {
+        this._setViewHeightToFull(false);
+    }
+
+    _setViewHeightToFull = (isFull = false) => {
+        this.setState({
+            containerStyle: isFull ? mergeStyles('container', 'fullHeight') : mergeStyles('container')
+        });
     }
 
     _datePicker = async () => {
@@ -90,7 +107,7 @@ class TransactionForm extends React.Component {
     render() {
         return (
             <ScrollView
-                style={mergeStyles('container')}
+                contentContainerStyle={this.state.containerStyle}
             >
 
                 {/* Transaction Amount */}
@@ -102,7 +119,7 @@ class TransactionForm extends React.Component {
 
                 <FormInput
                     caretHidden
-                    containerStyle={mergeStyles('base', 'input')}
+                    containerStyle={mergeStyles('base', 'inputField')}
                     onChangeText={this._handleChange.bind(null, 'amount')}
                     placeholder='0.00'
                     keyboardType='numeric'
@@ -171,16 +188,13 @@ class TransactionForm extends React.Component {
                 </FormLabel>
 
                 <FormInput
-                    containerStyle={mergeStyles('base', 'input')}
+                    containerStyle={mergeStyles('base', 'inputField')}
                     multiLine={true}
                     onChangeText={this._handleChange.bind(null, 'description')}
                     placeholder='transaction details'
                     underlineColorAndroid={UNDERLINE_COLOR}
                     value={this.state.description}
                 />
-
-                {/* Just to add some space between description and submit */}
-                <View style={{ height: 130 }}/>
 
                 {/* Submit Transaction */}
                 <ActionButton
