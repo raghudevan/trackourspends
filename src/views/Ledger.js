@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux';
 
 import { ListItem } from 'react-native-elements';
 import ActionButton from 'react-native-action-button';
+
+import { getDate } from '@utils/date-time';
 import styles from '@assets/styles';
 
 const style = StyleSheet.create({
@@ -60,6 +62,15 @@ const style = StyleSheet.create({
     }
 });
 
+class EmptyList extends React.Component {
+    render() {
+        return (
+            <View style={styles.center}>
+                <Text>Please add a transaction!</Text>
+            </View>
+        )
+    }
+}
 class SectionSeperator extends React.Component {
     _getStyle = ({ trailingItem, trailingSection }) => {
         // leading section and current section don't match => space needed
@@ -96,16 +107,16 @@ class Ledger extends React.Component {
                 containerStyle={style.listItem}
                 hideChevron
                 title={item.description}
-                rightTitle={parseFloat(item.value).toFixed(2)}
+                rightTitle={parseFloat(item.amount).toFixed(2)}
                 rightTitleStyle={style.value}/>
         );
     }
 
     _renderHeader = ({ section }) => {
-        let totalExpense = section.data.reduce((sum, current) => sum + parseFloat(current.value), 0);
+        let totalExpense = section.data.reduce((sum, current) => sum + parseFloat(current.amount), 0);
         return (
             <View style={style.header}>
-                <Text style={style.headerText}>{section.title}</Text>
+                <Text style={style.headerText}>{getDate(section.title, 'D dddd')}</Text>
                 <Text style={style.headerRightText}>{totalExpense.toFixed(2)}</Text>
             </View>
         );
@@ -121,6 +132,7 @@ class Ledger extends React.Component {
                     sections={this.props.transactions}
                     keyExtractor={(item, index) => item.timestamp}
                     SectionSeparatorComponent={SectionSeperator}
+                    ListEmptyComponent={EmptyList}
                 />
 
                 <ActionButton

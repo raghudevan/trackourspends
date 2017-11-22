@@ -8,6 +8,7 @@ import { bindActionCreators } from 'redux';
 import * as userActions from '@actions/user';
 
 import powerIcon from "material-design-icons/action/1x_web/ic_power_settings_new_white_36dp.png"
+import trashIcon from "material-design-icons/action/1x_web/ic_delete_white_36dp.png"
 import syncIcon from 'material-design-icons/notification/1x_web/ic_sync_white_36dp.png';
 
 const styles = StyleSheet.create({
@@ -36,9 +37,21 @@ class Toolbar extends React.Component {
     onAction = async (position) => {
         switch(position) {
             case 0: {
+                // logout
                 try {
                     await GoogleSignin.signOut(this.props.user);
-                    await this.props.actions.saveUserData(this.props.user, this.props.appState)
+                    await this.props.actions.saveUserData(this.props.user, this.props.appState);
+                    this.props.navigation.navigate('login');
+                } catch (exception) {
+                    console.log('unable to save user data at the moment');
+                }
+                break;
+            }
+            case 1: {
+                // flush data
+                try {
+                    await GoogleSignin.signOut(this.props.user);
+                    await this.props.actions.saveUserData(this.props.user, {});
                     this.props.navigation.navigate('login');
                 } catch (exception) {
                     console.log('unable to save user data at the moment');
@@ -58,8 +71,9 @@ class Toolbar extends React.Component {
             actions = [];
         } else {
             actions = [
-                { title:"Logout", show: "always", icon: powerIcon, show: "never" },
-                { title:"Sync", show: "always", icon: syncIcon }
+                { title: 'Logout', show: 'never', icon: powerIcon },
+                { title: 'FlushData', show: 'never', icon: trashIcon },
+                { title: 'Sync', show: 'always', icon: syncIcon },
             ];
         }
         return actions;

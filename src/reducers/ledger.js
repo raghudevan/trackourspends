@@ -1,97 +1,31 @@
 import * as ledger from '@constants/ledger';
+import * as user from '@constants/user';
+import { getDate } from '@utils/date-time';
 
 // category should be category id, so that we can map
 // back to the category with it => category map should be held somewhere
 const initialState = {
-    transactions: [
-        {
-          title: '18 Nov, 2017',
-          data: [
-              {
-                  timestamp: '1',
-                  category: 'Meats',
-                  description: 'chicken',
-                  value: '7',
-              },
-              {
-                  timestamp: '2',
-                  category: 'Communication',
-                  description: 'mobile recharge',
-                  value: '10',
-              },
-          ]
-        },
-        {
-          title: '17 Nov, 2017',
-          data: [
-              {
-                  timestamp: '3',
-                  category: 'Meats',
-                  description: 'mutton',
-                  value: '10',
-              },
-              {
-                  timestamp: '4',
-                  category: 'Transportation',
-                  description: 'Booked flight tickets',
-                  value: '100',
-              },
-              {
-                    timestamp: '5',
-                    category: 'Meats',
-                    description: 'mutton',
-                    value: '10',
-                },
-                {
-                    timestamp: '6',
-                    category: 'Transportation',
-                    description: 'Booked flight tickets',
-                    value: '100',
-                },
-          ]
-        },
-        {
-          title: '16 Nov, 2017',
-          data: [
-              {
-                  timestamp: '3',
-                  category: 'Meats',
-                  description: 'mutton',
-                  value: '10',
-              },
-              {
-                  timestamp: '4',
-                  category: 'Transportation',
-                  description: 'Booked flight tickets',
-                  value: '100',
-              },
-          ]
-        },
-        {
-          title: '15 Nov, 2017',
-          data: [
-              {
-                  timestamp: '3',
-                  category: 'Meats',
-                  description: 'mutton',
-                  value: '10',
-              },
-              {
-                  timestamp: '4',
-                  category: 'Transportation',
-                  description: 'Booked flight tickets',
-                  value: '100',
-              },
-          ]
-        },
-    ]
+    transactions: []
 };
 
 export default function(state = initialState, action) {
     switch (action.type) {
         case ledger.CREATE: {
-            let transactions = state.transactions.concat([action.transaction]);
-            return { transactions };
+            let { amount, category, description, timestamp, date } = action.transaction;
+            let newTransactions = state.transactions.concat([])
+            let dayObj = newTransactions.find(item => getDate(item.title) === getDate(date));
+            if (dayObj) {
+                dayObj.data = dayObj.data.concat([{ amount, category, description, timestamp }]);
+            } else {
+                // new transaction for the day
+                dayObj = {
+                    title: date,
+                    data: [{ amount, category, description, timestamp }]
+                };
+                newTransactions.push(dayObj);
+            }
+
+            return { transactions: newTransactions.sort((a, b) => a.title > b.title ? -1 : 1) };
         }
         case ledger.UPDATE: {
             let transaction = state.transactions.find((item) => item.id === action.data.id);
@@ -101,6 +35,9 @@ export default function(state = initialState, action) {
         case ledger.DELETE: {
             let transactions = state.transactions.filter((item) => item.id !== action.data.id);
             return { transactions };
+        }
+        case user.LOAD_SUCCESS: {
+            return action.appState.ledger || initialState;
         }
         default: {
             return { ...state };

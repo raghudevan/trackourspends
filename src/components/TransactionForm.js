@@ -5,13 +5,15 @@ import { Button, FormLabel, FormInput, Icon } from 'react-native-elements'
 import ActionButton from 'react-native-action-button';
 import moment from 'moment';
 
+import { getDate } from '@utils/date-time';
+
 const mergeStyles = (...keys) => StyleSheet.flatten(keys.map(key => style[key]));
 
 const BUTTON_COLOR = '#7e7e7e';
 const UNDERLINE_COLOR = '#64B5F6';
 const style = StyleSheet.create({
     container: {
-        backgroundColor: '#fff',
+        backgroundColor: '#FAFAFA',
         paddingTop: 20,
     },
     fullHeight: {
@@ -35,7 +37,7 @@ class TransactionForm extends React.Component {
             containerStyle: mergeStyles('container', 'fullHeight'),
             amount: '',
             category: '',
-            date: 'Today',
+            date: moment().valueOf(),
             description: '',
         }
     }
@@ -66,12 +68,12 @@ class TransactionForm extends React.Component {
 
     _datePicker = async () => {
         const { action, year, month, day } = await DatePickerAndroid.open({
-            date: new Date()
+            date: new Date(),
         });
         if (action !== DatePickerAndroid.dismissedAction) {
-            const diff = moment(new Date()).diff(moment(new Date(year, month, day)), 'days');
+            //const diff = moment(new Date()).diff(moment(new Date(year, month, day)), 'days');
             this.setState({
-                date: diff ? moment(new Date(year, month, day)).format('dddd, MMM Do YYYY') : 'Today'
+                date: moment(new Date(year, month, day)).valueOf()
             });
         }
     }
@@ -100,7 +102,8 @@ class TransactionForm extends React.Component {
         if (isNaN(amt) || amt <= 0) {
             ToastAndroid.show('Expected amount to be greater than zero!', ToastAndroid.SHORT);
         } else {
-            this.props.onSubmit(this.state);
+            let { containerStyle, ...transactionDetails } = this.state;
+            this.props.onSubmit({ ...transactionDetails, timestamp: moment().unix() });
         }
     }
 
@@ -135,10 +138,10 @@ class TransactionForm extends React.Component {
                 </FormLabel>
 
                 <Button
-                    buttonStyle={{ backgroundColor: '#fff' }}
+                    buttonStyle={{ backgroundColor: '#FAFAFA' }}
                     color={BUTTON_COLOR}
                     leftIcon={{ name: 'md-calendar', size: 25, type: 'ionicon', color: BUTTON_COLOR }}
-                    title={this.state.date}
+                    title={getDate(this.state.date)}
                     onPress={this._datePicker}
                 />
 
@@ -154,7 +157,7 @@ class TransactionForm extends React.Component {
                   * or render the category form item
                   */}
                 <Button
-                    buttonStyle={{ backgroundColor: '#fff' }}
+                    buttonStyle={{ backgroundColor: '#FAFAFA' }}
                     color={BUTTON_COLOR}
                     leftIcon={{ name: 'md-pricetag', size: 25, type: 'ionicon', color: BUTTON_COLOR }}
                     title='Choose a category'
@@ -173,7 +176,7 @@ class TransactionForm extends React.Component {
                   * or render the wallet form item
                   */}
                 <Button
-                    buttonStyle={{ backgroundColor: '#fff' }}
+                    buttonStyle={{ backgroundColor: '#FAFAFA' }}
                     color={BUTTON_COLOR}
                     leftIcon={{ name: 'wallet', size: 25, type: 'material-community', color: BUTTON_COLOR }}
                     title='Choose a wallet'
@@ -191,7 +194,7 @@ class TransactionForm extends React.Component {
                     containerStyle={mergeStyles('base', 'inputField')}
                     multiLine={true}
                     onChangeText={this._handleChange.bind(null, 'description')}
-                    placeholder='transaction details'
+                    placeholder='Transaction details'
                     underlineColorAndroid={UNDERLINE_COLOR}
                     value={this.state.description}
                 />

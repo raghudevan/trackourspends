@@ -16,7 +16,7 @@ class CreateTransaction extends React.Component {
 
     _onSubmit = (value) => {
         // call necessary action here
-        // this.props.actions.createTransaction();
+        this.props.actions.createTransaction(value);
         this.props.navigation.navigate('ledger');
     }
 
@@ -41,4 +41,4 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(mapStateToProps)(CreateTransaction);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateTransaction);

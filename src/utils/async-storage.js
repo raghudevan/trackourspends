@@ -2,12 +2,13 @@ import { AsyncStorage } from 'react-native';
 
 function makeAppStateForSave(appState) {
     // can determine here what we want to save as app state for the user
-    return {};
+    return appState;
 }
 
 export async function read(userObj) {
     let appState;
     try {
+        // https://github.com/facebook/react-native/issues/14101#issuecomment-346196392
         appState = await AsyncStorage.getItem(userObj.email);
         if (appState) {
             appState = JSON.parse(appState);
