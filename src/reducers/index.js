@@ -1,7 +1,7 @@
-import user from './user';
+import authentication from './authentication';
 import ledger from './ledger';
 
 export {
-    user,
+    authentication,
     ledger,
 }

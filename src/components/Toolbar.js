@@ -5,7 +5,7 @@ import { GoogleSignin } from 'react-native-google-signin';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import * as userActions from '@actions/user';
+import * as authActions from '@actions/authentication';
 
 import powerIcon from "material-design-icons/action/1x_web/ic_power_settings_new_white_36dp.png"
 import trashIcon from "material-design-icons/action/1x_web/ic_delete_white_36dp.png"
@@ -38,24 +38,16 @@ class Toolbar extends React.Component {
         switch(position) {
             case 0: {
                 // logout
-                try {
-                    await GoogleSignin.signOut(this.props.user);
-                    await this.props.actions.saveUserData(this.props.user, this.props.appState);
-                    this.props.navigation.navigate('login');
-                } catch (exception) {
-                    console.log('unable to save user data at the moment');
-                }
+                let { user, appState } = this.props;
+                await this.props.actions.logout(user, appState);
+                this.props.navigation.navigate('login');
                 break;
             }
             case 1: {
                 // flush data
-                try {
-                    await GoogleSignin.signOut(this.props.user);
-                    await this.props.actions.saveUserData(this.props.user, {});
-                    this.props.navigation.navigate('login');
-                } catch (exception) {
-                    console.log('unable to save user data at the moment');
-                }
+                let { user } = this.props;
+                await this.props.actions.logout(user, null);
+                this.props.navigation.navigate('login');
                 break;
             }
         }
@@ -98,16 +90,16 @@ class Toolbar extends React.Component {
 }
 
 function mapStateToProps(state) {
-    let { user, nav, ...appState } = state;
+    let { authentication, nav, ...appState } = state;
     return {
-        user,
+        user: authentication.user,
         appState,
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(userActions, dispatch)
+        actions: bindActionCreators(authActions, dispatch)
     };
 }
 

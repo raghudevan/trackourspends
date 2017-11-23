@@ -1,64 +1,34 @@
 import React from 'react';
-import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
+import { GoogleSigninButton } from 'react-native-google-signin';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Alert, View, Text } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 
-import * as userActions from '@actions/user';
+import * as authActions from '@actions/authentication';
 import styles from '@assets/styles';
 
 class Login extends React.Component {
 
     componentDidMount() {
-        this._setupGoogleSignin();
-    }
-
-    async _setupGoogleSignin() {
-        try {
-            await GoogleSignin.hasPlayServices({ autoResolve: true });
-            await GoogleSignin.configure({
-                scopes: ["https://www.googleapis.com/auth/drive.readonly"],
-                webClientId: '649923802570-mnn6hbcb39371pogl4ci8rjalb4s550i.apps.googleusercontent.com',
-                offlineAccess: false,
-                forceConsentPrompt: false
-            });
-
-            const user = await GoogleSignin.currentUserAsync();
-            if(user) {
-                this._postLogin(user);
+        this.props.actions.init().then(isUserAlreadyPresent => {
+            if (isUserAlreadyPresent) {
+                this._navigateToLedger();
             }
-        } catch(exception) {
-            Alert.alert(
-                'Warning',
-                `Some exception: ${exception.message}`,
-                [
-                    { text: 'OK' }
-                ]
-            )
-        }
+        });
     }
 
-    _postLogin = (user) => {
-        this.props.actions.loadUserData(user).then(() => {
-            this.props.navigation.navigate('ledger');
-            this.refs.signInBtn._clickListener.remove();
-        });
+    _navigateToLedger = () => {
+        this.props.navigation.navigate('ledger');
+        this.refs.signInBtn._clickListener.remove();
     }
 
     _signIn = () => {
-        GoogleSignin.signIn()
-        .then((user) => {
-            this._postLogin(user);
-        }, (err) => {
-            Alert.alert(
-                'Error',
-                 `Code: ${err.code}\nMessage: ${err.message}`,
-                 [
-                    { text: 'OK' }
-                 ]
-            );
-        });
+        this.props.actions.login().then(isSuccess => {
+            if (isSuccess) {
+                this._navigateToLedger();
+            }
+        })
     }
 
     render() {
@@ -90,7 +60,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(userActions, dispatch)
+        actions: bindActionCreators(authActions, dispatch)
     };
 }
 
