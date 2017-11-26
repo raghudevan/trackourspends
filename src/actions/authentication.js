@@ -48,6 +48,7 @@ export function login() {
     };
 }
 
+// will do logout
 export function logout(user, appState) {
     return async (dispatch) => {
         try {

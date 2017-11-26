@@ -3,14 +3,14 @@
 A simple expense tracking application with cloud sync across multiple devices. This application will always be free and without ads. 
 
 ### Things i dont like
-* ads in apps
+* Ads in apps
 * most expense tracking apps do not have cloud sync across devices
-* i cant add features onto other people's apps
+* I cant add features onto other people's apps
 
 ### As a result...
-* this app will always be free to use
-* could sync will be an available feature
-* i can add w/e features i want!
+* This app will always be free to use
+* Cloud sync will be an available feature
+* I can add w/e features I want!
 
 ### Minimum Viable Product
 This application will be considered "usable" when the following features are completed.
