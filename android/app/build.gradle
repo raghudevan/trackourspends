@@ -159,6 +159,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-push-notifications')
     compile (project(':react-native-device-info')){
         exclude group: "com.google.android.gms"
     }

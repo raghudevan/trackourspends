@@ -11,6 +11,7 @@
         "module-resolver", {
             "cwd": "babelrc",
             "alias": {
+                "@alert": "./src/components/Notifier",
                 "@utils": "./src/utils",
                 "@components": "./src/components",
                 "@views": "./src/views",

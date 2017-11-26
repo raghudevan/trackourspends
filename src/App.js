@@ -7,6 +7,8 @@ import createDrawerRoutes from '@utils/app-utils';
 import { write } from '@utils/async-storage';
 import createStore from '@store';
 
+import Notifier, { Alert } from '@alert';
+
 import Login from '@views/Login';
 import Ledger from '@views/Ledger';
 import CreateTransaction from '@views/CreateTransaction';
@@ -62,6 +64,14 @@ const navReducer = (state = initialState, action) => {
 const store = createStore({ nav: navReducer });
 
 class RootWithNavigationState extends React.Component {
+    constructor() {
+        super();
+    }
+
+    componentDidMount() {
+        Alert.init(this.notification);
+    }
+
     makeNavigation = () => {
         return addNavigationHelpers({
             dispatch: this.props.dispatch,
@@ -70,13 +80,17 @@ class RootWithNavigationState extends React.Component {
     }
 
     render() {
-        return (
-            <Root navigation={this.makeNavigation()} />
-        );
+        return [
+            <Root
+                key='app-root'
+                navigation={this.makeNavigation()}
+            />,
+            <Notifier key='notification' ref={(ref) => this.notification = ref} />
+        ];
     }
 }
 
-const mapStateToProps = (state) => ({ nav: state.nav });
+const mapStateToProps = (state) => ({ nav: state.nav, notification: state.notification });
 
 const ConnectedRootWithNavigationState = connect(mapStateToProps)(RootWithNavigationState);
 

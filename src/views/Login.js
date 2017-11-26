@@ -2,8 +2,9 @@ import React from 'react';
 import { GoogleSigninButton } from 'react-native-google-signin';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Alert, View, Text } from 'react-native';
+import { View, Text } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
+import { Alert } from '@alert';
 
 import * as authActions from '@actions/authentication';
 import styles from '@assets/styles';
@@ -20,6 +21,7 @@ class Login extends React.Component {
 
     _navigateToLedger = () => {
         this.props.navigation.navigate('ledger');
+        Alert.success(`Welcome ${this.props.authentication.user.name}!`);
         this.refs.signInBtn._clickListener.remove();
     }
 
@@ -54,7 +56,7 @@ class Login extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        user: state.user
+        authentication: state.authentication
     };
 }
 

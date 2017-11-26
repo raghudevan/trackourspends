@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DatePickerAndroid, Keyboard, ScrollView, StyleSheet, ToastAndroid, View } from 'react-native';
+import { DatePickerAndroid, Keyboard, ScrollView, StyleSheet } from 'react-native';
 import { Button, FormLabel, FormInput, Icon } from 'react-native-elements'
 import ActionButton from 'react-native-action-button';
 import moment from 'moment';
 
+import { Alert } from '@alert';
 import { getDate } from '@utils/date-time';
 
 const mergeStyles = (...keys) => StyleSheet.flatten(keys.map(key => style[key]));
@@ -100,11 +101,15 @@ class TransactionForm extends React.Component {
         // invoke the submit functionality
         const amt = parseFloat(this.state.amount);
         if (isNaN(amt) || amt <= 0) {
-            ToastAndroid.show('Expected amount to be greater than zero!', ToastAndroid.SHORT);
+            Alert.warn('Expected amount to be greater than zero!');
         } else {
             let { containerStyle, ...transactionDetails } = this.state;
             this.props.onSubmit({ ...transactionDetails, timestamp: moment().unix() });
         }
+    }
+
+    _onFocusInput = () => {
+        Alert.hide();
     }
 
     render() {
@@ -124,6 +129,7 @@ class TransactionForm extends React.Component {
                     caretHidden
                     containerStyle={mergeStyles('base', 'inputField')}
                     onChangeText={this._handleChange.bind(null, 'amount')}
+                    onFocus={this._onFocusInput}
                     placeholder='0.00'
                     keyboardType='numeric'
                     underlineColorAndroid={UNDERLINE_COLOR}
