@@ -1,0 +1,2 @@
+export const SIGN_IN_SUCCESS   = 'LOAD_SUCCESS';
+export const SIGN_OUT_SUCCESS  = 'UNLOAD_LOAD_SUCCESS';

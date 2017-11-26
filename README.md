@@ -11,3 +11,6 @@ A simple expense tracking application with cloud sync across multiple devices. T
 * this app will always be free to use
 * could sync will be an available feature
 * i can add w/e features i want!
+
+### Built on
+* `react-native`
