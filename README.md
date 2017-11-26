@@ -12,5 +12,14 @@ A simple expense tracking application with cloud sync across multiple devices. T
 * could sync will be an available feature
 * i can add w/e features i want!
 
+### Minimum Viable Product
+This application will be considered "usable" when the following features are completed.
+
+- [x] can google signin
+- [x] add transactions to the ledger (amt, date)
+- [ ] transactions contain category
+- [ ] transactions contain wallet info
+- [ ] cloud-sync (can share with other users)
+
 ### Built on
 * `react-native`
