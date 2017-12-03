@@ -143,6 +143,7 @@ export default class Notifier extends React.Component {
                     style={{
                         backgroundColor: this.state.notificationColor,
                         color: this.state.textColor,
+                        flex: 1,
                         fontWeight: 'bold',
                         paddingTop: 20,
                         paddingBottom: 20,

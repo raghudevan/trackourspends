@@ -24,3 +24,33 @@ export function getDate(unixTimestamp, format = 'ddd, MMM Do YYYY') {
 
     return date;
 }
+
+export function getMonthYear(date, inputFormat = 'x') {
+    // `X` => unixTimestamp (in seconds)
+    return moment(date, inputFormat).format('MMM, YYYY');
+}
+
+// start and end expected in dd/mm/yyy
+// offset - [24, 'months']
+export function dateRange(start, end, target, offset, inputFormat = 'DD/MM/YYYY') {
+    let range = [];
+    let startMoment = moment(start, inputFormat).startOf('month').subtract(...offset);
+    let endMoment = moment(end, inputFormat).startOf('month').add(...offset);
+    let targetMoment = moment(target, inputFormat);
+    let targetLabel = targetMoment.format('MMM, YYYY');
+    let index = -1;
+    while (endMoment >= startMoment) {
+        let tabLabel = startMoment.format('MMM, YYYY');
+        range.push(tabLabel);
+        if (tabLabel === targetLabel) {
+            index = range.length - 1;
+        }
+
+        startMoment.add(1, 'month');
+    }
+    return { index, range };
+}
+
+export function currentDate(format = 'DD/MM/YYYY') {
+    return moment().format(format);
+}

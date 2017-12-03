@@ -1,15 +1,24 @@
 import React from 'react';
-import { SectionList, StyleSheet, Text, View  } from 'react-native';
+import { Dimensions, ScrollView, SectionList, StyleSheet, Text, View  } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
+import { TabViewAnimated, TabBar, SceneMap, TabViewPagerExperimental } from 'react-native-tab-view';
 import { ListItem } from 'react-native-elements';
 import ActionButton from 'react-native-action-button';
 
-import { getDate } from '@utils/date-time';
-import styles from '@assets/styles';
+import { dateRange, currentDate, getDate, getMonthYear } from '@utils/date-time';
 
 const style = StyleSheet.create({
+    center: {
+        flex: 1,
+        alignItems: 'center',
+        height: '100%',
+        justifyContent: 'center',
+    },
+    container: {
+        flex: 1,
+        height: '100%',
+    },
     header: {
         alignItems: 'center',
         backgroundColor: 'white',
@@ -26,6 +35,7 @@ const style = StyleSheet.create({
         width: "100%",
     },
     headerText: {
+        flex: 1,
         fontSize: 20,
         fontWeight: 'bold',
         marginLeft: 10,
@@ -65,7 +75,7 @@ const style = StyleSheet.create({
 class EmptyList extends React.Component {
     render() {
         return (
-            <View style={styles.center}>
+            <View style={style.center}>
                 <Text>Please add a transaction!</Text>
             </View>
         )
@@ -90,11 +100,7 @@ class SectionSeperator extends React.Component {
     }
 }
 
-class Ledger extends React.Component {
-
-    static navigationOptions = {
-        drawerLabel: "Ledger"
-    }
+class TransactionList extends React.Component {
 
     _addTransaction = () => {
         // navigate to the transaction screen
@@ -122,14 +128,21 @@ class Ledger extends React.Component {
         );
     }
 
+    _getSections = (data, monthYear) => {
+        let monthData = data[getMonthYear(monthYear, 'MMM, YYYY')] || [];
+        return monthData.sort((a, b) => a.title > b.title ? -1 : 1);
+    }
+
     render() {
-        return(
-            <View style={styles.center}>
+        return (
+            <ScrollView
+                contentContainerStyle={style.container}
+            >
                 <SectionList
-                    style={{ width: "100%", padding: 20 }}
+                    style={{ width: "100%", padding: 10 }}
                     renderItem={this._renderItem}
                     renderSectionHeader={this._renderHeader}
-                    sections={this.props.transactions}
+                    sections={this._getSections(this.props.transactionalData, this.props.tabLabel)}
                     keyExtractor={(item, index) => item.timestamp}
                     SectionSeparatorComponent={SectionSeperator}
                     ListEmptyComponent={EmptyList}
@@ -142,19 +155,98 @@ class Ledger extends React.Component {
                     buttonColor="rgba(231,76,60,1)"
                     onPress={this._addTransaction}
                 />
-            </View>
+            </ScrollView>
+        );
+    }
+}
+
+const initialLayout = {
+    height: 0,
+    width: Dimensions.get('window').width,
+};
+const FirstRoute = () => <View style={[ style.container, { backgroundColor: '#ff4081' } ]} />;
+const SecondRoute = () => <View style={[ style.container, { backgroundColor: '#673ab7' } ]} />;
+
+class Ledger extends React.Component {
+
+    static navigationOptions = {
+        drawerLabel: "Ledger"
+    }
+
+    constructor(props) {
+        super(props);
+        let { index, range } = this._makeTabs(props.transactionalData);
+        this.state = {
+            index,
+            routes: range.map(date => ({ key: date, title: date })),
+        };
+    }
+
+    _makeTabs = (transactionalData) => {
+        // can call this when user scrolls - just load the frame that is necessary
+        let indexAndRange = {};
+        let sortedMonths = Object.keys(transactionalData).sort((a, b) =>
+            moment(a, 'MMM, YYYY') > moment(b, 'MMM, YYYY') ? 1 : -1);
+
+        // always show current month
+        let current = currentDate('MMM, YYYY');
+        if (sortedMonths.length > 0) {
+            // first month - 48mnths, last month + 48mnths
+            indexAndRange = dateRange(sortedMonths[0], sortedMonths[sortedMonths.length - 1],
+                sortedMonths[sortedMonths.length - 1], [5, 'months'], 'MMM, YYYY');
+        } else {
+            // center around current month
+            indexAndRange = dateRange(current, current,
+                current, [5, 'months'], 'MMM, YYYY');
+        }
+        // need to display this in the tab bar
+        // show +10/-10 months?
+        // show This month, next month, previous month?
+        return indexAndRange;
+    }
+
+    _handleIndexChange = index => this.setState({ index });
+
+    _renderHeader = props => {
+        return (
+            <TabBar
+                {...props}
+                useNativeDriver={true}
+                scrollEnabled
+                style={{ backgroundColor: '#1E88E5', height: 20 }}
+                tabStyle={{ height: 20 }}
+                labelStyle={{ height: 20 }}
+            />
+        );
+    }
+
+    _renderScene = (props) => {
+        return (
+            <TransactionList
+                {...this.props}
+                tabLabel={props.route.title}
+            />
+        );
+    }
+
+    render() {
+        return(
+            <TabViewAnimated
+                style={style.container}
+                navigationState={this.state}
+                renderScene={this._renderScene}
+                renderHeader={this._renderHeader}
+                onIndexChange={this._handleIndexChange}
+                initialLayout={initialLayout}
+                useNativeDriver
+                lazy
+            />
         );
     }
 }
 
 function mapStateToProps(state) {
-    return { ...state.ledger };
+    return { transactionalData: { ...state.ledger } };
 }
-
-//function mapDispatchToProps(dispatch) {
-//    return {
-//        actions: bindActionCreators(ledgerActions, dispatch)
-//    };
-//}
 
 export default connect(mapStateToProps)(Ledger)

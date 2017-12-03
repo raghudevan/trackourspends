@@ -13,7 +13,7 @@ import syncIcon from 'material-design-icons/notification/1x_web/ic_sync_white_36
 
 const styles = StyleSheet.create({
   toolbar: {
-    backgroundColor: '#448AFF',
+    backgroundColor: '#1E88E5',
     height: 56,
   },
 });

@@ -101,8 +101,8 @@ android {
         applicationId "com.trackourspends"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 13
-        versionName "11.17.13"
+        versionCode 14
+        versionName "11.17.14"
         multiDexEnabled true
         ndk {
             abiFilters "armeabi-v7a", "x86"

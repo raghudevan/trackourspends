@@ -22,7 +22,11 @@ const drawerRoutesConfig = [
             {
                 name: 'create-transaction',
                 view: CreateTransaction
-            }
+            }/*,
+            {
+                name: 'create-transaction',
+                view: CreateTransaction
+            }*/
         ]
     },
     {
@@ -125,9 +129,9 @@ class StatefulApp extends React.Component {
     _handleAppStateChange = (nextAppState) => {
         if (nextAppState.match(/inactive|background/)) {
             console.log(`going ${nextAppState}`)
-            const { user, nav, ...appState } = store.getState();
-            if (user) {
-                write(user, appState)/*.then((isWriteSuccess) => {
+            const { authentication, nav, ...appState } = store.getState();
+            if (authentication && authentication.user) {
+                write(authentication.user, appState)/*.then((isWriteSuccess) => {
                     console.log('isWriteSuccess', isWriteSuccess)
                 });*/
             }

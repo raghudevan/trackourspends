@@ -1,5 +1,3 @@
 export default {
-    ledger: {
-        transactions: [],
-    },
+    ledger: {},
 };
