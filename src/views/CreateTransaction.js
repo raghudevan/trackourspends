@@ -20,11 +20,16 @@ class CreateTransaction extends React.Component {
         this.props.navigation.navigate('ledger');
     }
 
+    _navToCategories = () => {
+        this.props.navigation.navigate('categories');
+    }
+
     render() {
         return (
             <View style={styles.fullHeightWidth}>
                 <TransactionForm
                     onSubmit={this._onSubmit}
+                    selectCategory={this._navToCategories}
                 />
             </View>
         );

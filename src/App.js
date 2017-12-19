@@ -12,6 +12,7 @@ import Notifier, { Alert } from '@alert';
 import Login from '@views/Login';
 import Ledger from '@views/Ledger';
 import CreateTransaction from '@views/CreateTransaction';
+import Categories from '@views/Categories';
 import Wallets from '@views/Wallets';
 
 const drawerRoutesConfig = [
@@ -22,12 +23,12 @@ const drawerRoutesConfig = [
             {
                 name: 'create-transaction',
                 view: CreateTransaction
-            }/*,
-            {
-                name: 'create-transaction',
-                view: CreateTransaction
-            }*/
+            },
         ]
+    },
+    {
+        stackName: 'categories',
+        view: Categories
     },
     {
         stackName: 'wallets',

@@ -54,3 +54,7 @@ export function dateRange(start, end, target, offset, inputFormat = 'DD/MM/YYYY'
 export function currentDate(format = 'DD/MM/YYYY') {
     return moment().format(format);
 }
+
+export function sortDates(dates, inputFormat) {
+    return dates.sort((a, b) => moment(a, inputFormat) > moment(b, inputFormat) ? 1 : -1)
+}

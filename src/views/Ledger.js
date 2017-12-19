@@ -2,11 +2,15 @@ import React from 'react';
 import { Dimensions, ScrollView, SectionList, StyleSheet, Text, View  } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { TabViewAnimated, TabBar, SceneMap, TabViewPagerExperimental } from 'react-native-tab-view';
+import { TabViewAnimated, TabBar } from 'react-native-tab-view';
 import { ListItem } from 'react-native-elements';
 import ActionButton from 'react-native-action-button';
 
-import { dateRange, currentDate, getDate, getMonthYear } from '@utils/date-time';
+import {
+    dateRange, currentDate,
+    getDate, getMonthYear,
+    sortDates
+} from '@utils/date-time';
 
 const style = StyleSheet.create({
     center: {
@@ -102,11 +106,6 @@ class SectionSeperator extends React.Component {
 
 class TransactionList extends React.Component {
 
-    _addTransaction = () => {
-        // navigate to the transaction screen
-        this.props.navigation.navigate('create-transaction');
-    }
-
     _renderItem = ({ item }) => {
         return (
             <ListItem
@@ -138,6 +137,7 @@ class TransactionList extends React.Component {
             <ScrollView
                 contentContainerStyle={style.container}
             >
+                {/* some meta data about the months's spends will go here */}
                 <SectionList
                     style={{ width: "100%", padding: 10 }}
                     renderItem={this._renderItem}
@@ -146,14 +146,6 @@ class TransactionList extends React.Component {
                     keyExtractor={(item, index) => item.timestamp}
                     SectionSeparatorComponent={SectionSeperator}
                     ListEmptyComponent={EmptyList}
-                />
-
-                <ActionButton
-                    position="right"
-                    offsetX={30}
-                    offsetY={30}
-                    buttonColor="rgba(231,76,60,1)"
-                    onPress={this._addTransaction}
                 />
             </ScrollView>
         );
@@ -164,8 +156,6 @@ const initialLayout = {
     height: 0,
     width: Dimensions.get('window').width,
 };
-const FirstRoute = () => <View style={[ style.container, { backgroundColor: '#ff4081' } ]} />;
-const SecondRoute = () => <View style={[ style.container, { backgroundColor: '#673ab7' } ]} />;
 
 class Ledger extends React.Component {
 
@@ -182,11 +172,15 @@ class Ledger extends React.Component {
         };
     }
 
+    _addTransaction = () => {
+        // navigate to the transaction screen
+        this.props.navigation.navigate('create-transaction');
+    }
+
     _makeTabs = (transactionalData) => {
         // can call this when user scrolls - just load the frame that is necessary
         let indexAndRange = {};
-        let sortedMonths = Object.keys(transactionalData).sort((a, b) =>
-            moment(a, 'MMM, YYYY') > moment(b, 'MMM, YYYY') ? 1 : -1);
+        let sortedMonths = sortDates(Object.keys(transactionalData), 'MMM, YYYY');
 
         // always show current month
         let current = currentDate('MMM, YYYY');
@@ -207,7 +201,7 @@ class Ledger extends React.Component {
 
     _handleIndexChange = index => this.setState({ index });
 
-    _renderHeader = props => {
+    _renderHeader = (props) => {
         return (
             <TabBar
                 {...props}
@@ -230,8 +224,9 @@ class Ledger extends React.Component {
     }
 
     render() {
-        return(
+        return([
             <TabViewAnimated
+                key="ledger-tab-view"
                 style={style.container}
                 navigationState={this.state}
                 renderScene={this._renderScene}
@@ -240,8 +235,16 @@ class Ledger extends React.Component {
                 initialLayout={initialLayout}
                 useNativeDriver
                 lazy
+            />,
+            <ActionButton
+                key="create-transaction"
+                position="right"
+                offsetX={30}
+                offsetY={30}
+                buttonColor="rgba(231,76,60,1)"
+                onPress={this._addTransaction}
             />
-        );
+        ]);
     }
 }
 

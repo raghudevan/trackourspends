@@ -4,6 +4,7 @@ import { DatePickerAndroid, Keyboard, ScrollView, StyleSheet } from 'react-nativ
 import { Button, FormLabel, FormInput, Icon } from 'react-native-elements'
 import ActionButton from 'react-native-action-button';
 import moment from 'moment';
+import _ from 'lodash';
 
 import { Alert } from '@alert';
 import { getDate } from '@utils/date-time';
@@ -32,14 +33,14 @@ const style = StyleSheet.create({
 
 class TransactionForm extends React.Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             containerStyle: mergeStyles('container', 'fullHeight'),
-            amount: '',
-            category: '',
+            amount: _.get(props, 'amount', ''),
+            category: _.get(props, 'category', ''),
             date: moment().valueOf(),
-            description: '',
+            description: _.get(props, 'category', ''),
         }
     }
 
@@ -81,6 +82,7 @@ class TransactionForm extends React.Component {
 
     _selectCategory = () => {
         // nav to category view
+        this.props.selectCategory();
     }
 
     _handleChange = (type, value) => {
@@ -159,7 +161,7 @@ class TransactionForm extends React.Component {
                 </FormLabel>
 
                 {/*
-                  * conditionally render either a button to nav to the category view
+                  * conditionally render either a button to navCategories to the category view
                   * or render the category form item
                   */}
                 <Button

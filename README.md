@@ -1,6 +1,6 @@
 # TrackOurSpends
 
-A simple expense tracking application with cloud sync across multiple devices. This application will always be free and without ads. 
+A simple expense tracking application with cloud sync across multiple devices. This application will always be free and without ads.
 
 ### Things i dont like
 * Ads in apps
